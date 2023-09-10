@@ -1,39 +1,51 @@
 window.onload = function() {
-    fetch('/todo', {
-      method: 'GET'
-    })
-    .then((res) => res.json())
-    .then((body) => {
-      const todoBody = document.getElementById('todo-body');
-      const doneBody = document.getElementById('done-body');
-      body.forEach((todo, index) => {
-        if (todo.done) {
-          // add to done
-          const row = document.createElement('tr');
-          row.innerHTML = `<td>${todo.text}</td>`;
-          doneBody.appendChild(row);
-        } else {
-          // add to todo table
-          const row = document.createElement('tr');
-          row.id = `todo-${index}`;
-          row.innerHTML = `
-            <td scope="row" class="text-left">${todo.text}</td>
-            <td>
-              <button
-                class="btn btn-outline-success btn-sm"
-                id=${todo._id}
-                cy-data=${'todo-' + index}
-                onClick="doneTODO(event)"
-              >
-                Done
-              </button>
-            </td>`
-  
-          todoBody.appendChild(row);
-        }
-      })
-    })
-  }
+  console.log("hi");
+  fetch('http://localhost:5000/todo', {
+    method: 'GET'
+  })
+  .then((res) => {
+    // if (!res.ok) {
+    //   throw new Error('Network response was not ok');
+    // }
+    // console.log("hi there");
+    // console.log(res.json());
+    return res.json();
+  })
+  .then((body) => {
+    console.log(body);
+    const todoBody = document.getElementById('todo-body');
+    const doneBody = document.getElementById('done-body');
+    body.forEach((todo, index) => {
+      if (todo.done) {
+        // add to done
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${todo.text}</td>`;
+        doneBody.appendChild(row);
+      } else {
+        // add to todo table
+        const row = document.createElement('tr');
+        row.id = `todo-${index}`;
+        row.innerHTML = `
+          <td scope="row" class="text-left">${todo.text}</td>
+          <td>
+            <button
+              class="btn btn-outline-success btn-sm"
+              id=${todo._id}
+              cy-data=${'todo-' + index}
+              onclick="doneTODO(event)"
+            >
+              Done
+            </button>
+          </td>`
+        todoBody.appendChild(row);
+      }
+    });
+  })
+  .catch((error) => {
+    console.error('Fetch error:', error);
+  });
+}
+
   
   function createTODO() {
     const todo = document.querySelector('input').value;
@@ -50,7 +62,7 @@ window.onload = function() {
   
   function doneTODO(event) {
     const { id } = event.target;
-    fetch(`/todo/${id}`, {
+    fetch(`http://localhost:5000/todo/${id}`, {
       method: 'PATCH',
       headers: {
         'Accept': 'application/json',

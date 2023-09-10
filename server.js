@@ -1,17 +1,16 @@
 const express = require('express');
-require("../db/conn");
+require("./conn");
 const path = require('path');
 const bodyParser = require('body-parser');
 
-const ToDo = require("../models/toDoModel");
-
+const ToDo = require("./toDoModel");
+const cors = require('cors');
 const PORT = process.env.PORT || 5000;
 const app = express();
-
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(express.static(__dirname + '/public'));
-
+app.use(cors());
 app.get('/todo', (req, res) => {
   ToDo.find()
     .then((toDos) => res.status(200).send(toDos))

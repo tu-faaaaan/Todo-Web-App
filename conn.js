@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const ToDo = require('../models/toDoModel').ToDo;
+// const ToDo = require('../models/toDoModel').ToDo;
 // const DB_URI = 'mongodb://127.0.0.1:27017/toDoApp';
 
 // mongoose.connect(DB_URI).then(() => {
@@ -7,7 +7,7 @@ const ToDo = require('../models/toDoModel').ToDo;
 //   app.listen(PORT);
 // });
 
-mongoose.connect('mongodb://127.0.0.1:27017/toDoApp', {
+mongoose.connect('mongodb://mongo:27017/toDoApp', {
     // useCreateIndex : true,
     useNewUrlParser : true,
     useUnifiedTopology : true
