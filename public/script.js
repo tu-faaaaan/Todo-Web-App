@@ -1,14 +1,8 @@
 window.onload = function() {
-  console.log("hi");
   fetch('http://localhost:5000/todo', {
     method: 'GET'
   })
   .then((res) => {
-    // if (!res.ok) {
-    //   throw new Error('Network response was not ok');
-    // }
-    // console.log("hi there");
-    // console.log(res.json());
     return res.json();
   })
   .then((body) => {

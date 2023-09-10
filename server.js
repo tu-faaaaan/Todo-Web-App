@@ -2,15 +2,17 @@ const express = require('express');
 require("./conn");
 const path = require('path');
 const bodyParser = require('body-parser');
-
 const ToDo = require("./toDoModel");
 const cors = require('cors');
 const PORT = process.env.PORT || 5000;
 const app = express();
+
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(express.static(__dirname + '/public'));
 app.use(cors());
+
+
 app.get('/todo', (req, res) => {
   ToDo.find()
     .then((toDos) => res.status(200).send(toDos))
@@ -33,10 +35,6 @@ app.patch('/todo/:id', (req, res) => {
     .then((toDo) => res.status(200).send(toDo))
     .catch((err) => res.status(400).send(err));
 });
-
-app.get("/", (req,res)=>{
-  res.send("Hello from Affan");
-})
 
 app.listen(PORT, ()=>{
   console.log(`Connection is live at port no. ${PORT}`);
